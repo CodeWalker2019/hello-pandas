@@ -1,5 +1,5 @@
 from inquirer import prompt
-from inquirer.questions import Question
+from numpy import int64
 from pandas.core.frame import DataFrame
 from const import ATTRIBUTES, Options, Questions, mock_data
 
@@ -29,14 +29,22 @@ while answers[Questions.OPTION.name] != Options.EXIT.value:
 
     elif answers[Questions.OPTION.name] == Options.DELETE_BY_INDEX.value:
         answers = prompt(Questions.INDEX.value)
-        index = answers[Questions.INDEX.name]
+        index = int(answers[Questions.INDEX.name])
         df.drop(index)
 
     elif answers[Questions.OPTION.name] == Options.PRINT_BY_ATTRIBUTE.value:
-        print("Not implemented yet")
-        # TODO
+        answers = prompt(Questions.ATTRIBUTE.value)
+        attribute = answers[Questions.ATTRIBUTE.name]
+        answers = prompt(Questions.NEW_ROW.value[attribute])
+        value = answers[attribute]
+
+        if df[attribute].dtype == int64():
+            value = int(value)
+
+        result = df[df[attribute].isin([value])]
+        print(result, "\n")
 
     elif answers[Questions.OPTION.name] == Options.PRINT_ALL.value:
-        print(df)
+        print(df, "\n")
 
     answers = prompt(Questions.OPTION.value)
