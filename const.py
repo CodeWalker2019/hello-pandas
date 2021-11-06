@@ -1,8 +1,6 @@
 from enum import Enum
-from inquirer import Text, List
 
-
-class Options(Enum):
+class Option(Enum):
     ADD_TO_FRAME = 'ADD TO FRAME'
     SORT_BY_ATTRIBUTE = 'SORT BY ATTRIBUTE'
     DELETE_BY_ATTRIBUTE = 'DELETE BY ATTRIBUTE'
@@ -13,23 +11,7 @@ class Options(Enum):
 
 
 ATTRIBUTES = ['AUTHOR', 'TITLE', 'PUBLISHER', 'YEAR', 'PAGES']
-
-
-class Questions(Enum):
-    OPTION = [List(
-        name='OPTION', message="Option",
-        choices=[option.value for option in Options],
-    )]
-
-    ATTRIBUTE = [List(
-        name='ATTRIBUTE', message='Attribute',
-        choices=ATTRIBUTES
-    )]
-
-    NEW_ROW = { attribute: [Text(attribute, message=attribute)] for attribute in ATTRIBUTES }
-
-    INDEX = [Text('INDEX', message="Index")]
-
+OPTIONS = [option.value for option in Option]
 
 mock_data = [
     ["Bjarne Stroustrup", "The C++ Programming Language", "Addison–Wesley", 1988, 1376],
